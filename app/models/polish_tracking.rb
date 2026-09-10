@@ -1,0 +1,2 @@
+class PolishTracking < ApplicationRecord
+end

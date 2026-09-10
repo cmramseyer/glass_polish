@@ -1,0 +1,30 @@
+<main class="page">
+  <h1>Polish Trackings</h1>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Product</th>
+          <th>Polish Type</th>
+          <th>Width</th>
+          <th>Height</th>
+          <th>Pending</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @polish_trackings.each do |polish_tracking| %>
+          <tr>
+            <td><%= polish_tracking.order_id %></td>
+            <td><%= polish_tracking.product %></td>
+            <td><%= polish_tracking.polish_type %></td>
+            <td><%= polish_tracking.width %></td>
+            <td><%= polish_tracking.height %></td>
+            <td><%= polish_tracking.available %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>
