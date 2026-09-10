@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_10_205617) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_10_230241) do
   create_table "polish_trackings", force: :cascade do |t|
     t.integer "available"
     t.integer "completed"
@@ -20,8 +20,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_205617) do
     t.integer "order_id"
     t.string "polish_type"
     t.string "product"
+    t.integer "total_item"
     t.integer "tracking_id"
     t.datetime "updated_at", null: false
     t.integer "width"
+  end
+
+  create_table "processed_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "event_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_processed_events_on_event_id", unique: true
   end
 end

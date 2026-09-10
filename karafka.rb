@@ -2,21 +2,9 @@
 
 class KarafkaApp < Karafka::App
   setup do |config|
-    config.kafka = { 'bootstrap.servers': '127.0.0.1:9092' }
-    config.client_id = "YOUR_APP_NAME-#{Process.pid}-#{Socket.gethostname}"
-
-    # IMPORTANT: Customize this group_id with your application name.
-    # The group_id should be unique per application to properly track message consumption.
-    # Example: config.group_id = 'inventory_service_consumer'
-    #
-    # Note: Advanced features and custom routing configurations may define their own consumer
-    # groups. These should also be uniquely named per application to avoid conflicts.
-    # For the advanced features, subscription groups and consumer groups in your routing
-    # configuration, follow the same uniqueness principle.
-    #
-    # For more details on consumer groups and routing configuration, please refer to the
-    # Karafka documentation: https://karafka.io/docs
-    config.group_id = 'YOUR_APP_NAME_consumer'
+    config.kafka = { 'bootstrap.servers': ENV.fetch('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092') }
+    config.client_id = "glass-polish-#{Process.pid}-#{Socket.gethostname}"
+    config.group_id = 'glass-polish-trackings'
     # Recreate consumers with each batch. This will allow Rails code reload to work in the
     # development mode. Otherwise Karafka process would not be aware of code changes
     config.consumer_persistence = !Rails.env.development?
