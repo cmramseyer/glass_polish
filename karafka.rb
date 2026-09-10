@@ -5,6 +5,7 @@ class KarafkaApp < Karafka::App
     config.kafka = { 'bootstrap.servers': ENV.fetch('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092') }
     config.client_id = "glass-polish-#{Process.pid}-#{Socket.gethostname}"
     config.group_id = 'glass-polish-trackings'
+    config.strict_topics_namespacing = false
     # Recreate consumers with each batch. This will allow Rails code reload to work in the
     # development mode. Otherwise Karafka process would not be aware of code changes
     config.consumer_persistence = !Rails.env.development?
@@ -45,9 +46,9 @@ class KarafkaApp < Karafka::App
   # end
 
   routes.draw do
-    # Uncomment this if you use Karafka with ActiveJob
-    # You need to define the topic per each queue name you use
-    # active_job_topic :default
+    topic 'glass.work.queued_polish' do
+      consumer WorkCompletedConsumer
+    end
   end
 
   # Uncomment this if you want Karafka to manage your topics configuration
