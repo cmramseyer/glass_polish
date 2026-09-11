@@ -29,7 +29,8 @@ class WorkCompletedConsumer < ApplicationConsumer
           width: payload.fetch("width"),
           height: payload.fetch("height"),
           total_item: payload.fetch("total_line"),
-          available: payload.fetch("done")
+          available: payload.fetch("done"),
+          completed: 0
         )
       end
     end

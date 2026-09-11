@@ -26,4 +26,18 @@ RSpec.describe PolishTracking, type: :model do
       completed: 1
     )
   end
+
+  describe "#pending" do
+    it "returns available minus completed" do
+      tracking = described_class.new(available: 5, completed: 2)
+
+      expect(tracking.pending).to eq(3)
+    end
+
+    it "treats nil values as zero" do
+      expect(described_class.new.pending).to eq(0)
+      expect(described_class.new(available: 4).pending).to eq(4)
+      expect(described_class.new(completed: 2).pending).to eq(-2)
+    end
+  end
 end

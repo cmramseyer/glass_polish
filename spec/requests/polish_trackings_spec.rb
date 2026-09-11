@@ -18,7 +18,7 @@ RSpec.describe "Polish trackings", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Order ID", "Window pane", "Edge polish", "Pending")
-    expect(response.body).to include("<td>3</td>")
+    expect(response.body).to include("<td>2</td>")
     expect(response.body).not_to include("Acme Glass")
   end
 end

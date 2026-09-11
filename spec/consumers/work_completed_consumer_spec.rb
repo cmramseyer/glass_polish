@@ -36,7 +36,7 @@ RSpec.describe WorkCompletedConsumer, type: :consumer do
       height: 500,
       total_item: 5,
       available: 1,
-      completed: nil
+      completed: 0
     )
   end
 

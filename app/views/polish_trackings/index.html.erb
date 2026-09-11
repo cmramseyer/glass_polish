@@ -22,7 +22,7 @@
             <td><%= polish_tracking.polish_type %></td>
             <td><%= polish_tracking.width %></td>
             <td><%= polish_tracking.height %></td>
-            <td><%= polish_tracking.available %></td>
+            <td><%= polish_tracking.pending %></td>
             <td><%= button_to "Complete one work", complete_polish_tracking_path(polish_tracking), method: :post %></td>
           </tr>
         <% end %>
