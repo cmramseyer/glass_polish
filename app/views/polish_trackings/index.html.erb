@@ -11,6 +11,7 @@
           <th>Width</th>
           <th>Height</th>
           <th>Pending</th>
+          <th>Done</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,7 @@
             <td><%= polish_tracking.width %></td>
             <td><%= polish_tracking.height %></td>
             <td><%= polish_tracking.available %></td>
+            <td><%= button_to "Complete one work", complete_polish_tracking_path(polish_tracking), method: :post %></td>
           </tr>
         <% end %>
       </tbody>

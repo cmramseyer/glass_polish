@@ -37,6 +37,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include Karafka::Testing::RSpec::Helpers, type: :consumer
+  config.include Karafka::Testing::RSpec::Helpers, type: :request
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
