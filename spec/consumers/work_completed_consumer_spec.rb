@@ -78,12 +78,12 @@ RSpec.describe WorkCompletedConsumer, type: :consumer do
     expect(PolishTracking.count).to eq(0)
   end
 
-  it 'rolls back the inbox receipt when the event cannot create a tracking' do
-    invalid_payload = payload.merge('extra_data' => {})
-    karafka.produce(invalid_payload.to_json, key: event_id)
+  it 'creates a tracking without a polish type' do
+    payload_without_polish_type = payload.merge('extra_data' => {})
+    karafka.produce(payload_without_polish_type.to_json, key: event_id)
 
-    expect { consumer.consume }.to raise_error(KeyError)
-    expect(ProcessedEvent.count).to eq(0)
-    expect(PolishTracking.count).to eq(0)
+    expect { consumer.consume }.to change(PolishTracking, :count).by(1)
+      .and change(ProcessedEvent, :count).by(1)
+    expect(PolishTracking.last.polish_type).to be_nil
   end
 end

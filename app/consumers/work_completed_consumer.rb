@@ -25,7 +25,7 @@ class WorkCompletedConsumer < ApplicationConsumer
           order_id: payload.fetch("order_id"),
           customer: payload.fetch("customer_name"),
           product: payload.fetch("product_name"),
-          polish_type: payload.fetch("extra_data").fetch("polish_type"),
+          polish_type: payload.fetch("extra_data", {}).fetch("polish_type", nil),
           width: payload.fetch("width"),
           height: payload.fetch("height"),
           total_item: payload.fetch("total_line"),
