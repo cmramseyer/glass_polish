@@ -5,31 +5,31 @@ class PolishTrackingsController < ApplicationController
 
   def complete
     tracking = PolishTracking.find(params[:id])
-    tracking.update!(completed: tracking.completed.to_i + 1)
+    event_id = SecureRandom.uuid
+
+    PolishTracking.transaction do
+      tracking.update!(completed: tracking.completed.to_i + 1)
+      OutboxMessage.create!(
+        event_id:,
+        topic: "glass.work.done_polish",
+        event_name: "polish_work_done",
+        key: tracking.tracking_id.to_s,
+        payload: {
+          event: "polish_work_done",
+          event_id:,
+          tracking_id: tracking.tracking_id,
+          qty: 1,
+          occurred_at: Time.current.iso8601
+        }.to_json
+      )
+    end
 
     begin
-      publish_polish_work_done(tracking)
+      OutboxPublisherJob.perform_later
     rescue StandardError => e
-      Rails.logger.error("Failed to publish polish_work_done for tracking #{tracking.tracking_id}: #{e.message}")
-      return redirect_to root_path, alert: "Work recorded, but the event could not be published."
+      Rails.logger.error("Failed to enqueue outbox publisher: #{e.message}")
     end
 
     redirect_to root_path, notice: "Completed one work for tracking #{tracking.tracking_id}."
-  end
-
-  private
-
-  def publish_polish_work_done(tracking)
-    Karafka.producer.produce_async(
-      topic: "glass.work.done_polish",
-      key: tracking.tracking_id.to_s,
-      payload: {
-        event: "polish_work_done",
-        event_id: SecureRandom.uuid,
-        tracking_id: tracking.tracking_id,
-        qty: 1,
-        occurred_at: Time.current.iso8601
-      }.to_json
-    )
   end
 end

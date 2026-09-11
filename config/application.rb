@@ -38,5 +38,9 @@ module GlassPolish
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Run Active Job through Solid Queue so OutboxPublisherJob enqueues
+    # into the queue workers (bin/jobs) instead of running inline.
+    config.active_job.queue_adapter = :solid_queue
   end
 end
