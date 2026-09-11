@@ -11,14 +11,17 @@ RSpec.describe "Complete one work", type: :request do
       width: 1000,
       height: 500,
       total_item: 5,
-      available: 1
+      available: 1,
+      completed: 0
     )
   end
 
-  it "increments available and publishes polish_work_done" do
+  it "increments completed and publishes polish_work_done" do
     expect do
       post complete_polish_tracking_path(tracking)
-    end.to change { tracking.reload.available }.from(1).to(2)
+    end.to change { tracking.reload.completed }.from(0).to(1)
+
+    expect(tracking.reload.available).to eq(1)
 
     expect(response).to redirect_to(root_path)
 

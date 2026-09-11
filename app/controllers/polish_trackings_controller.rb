@@ -5,7 +5,7 @@ class PolishTrackingsController < ApplicationController
 
   def complete
     tracking = PolishTracking.find(params[:id])
-    tracking.update!(available: tracking.available.to_i + 1)
+    tracking.update!(completed: tracking.completed.to_i + 1)
 
     begin
       publish_polish_work_done(tracking)
