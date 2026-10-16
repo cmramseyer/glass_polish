@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.3", ">= 8.1.3.1"
 # Pin json to 2.x: ActiveSupport 8.1.3.1 calls JSON.parse(json, options) positionally,
 # but json 3.x only accepts kwargs -> ArgumentError on any valid session cookie.
-gem "json", "~> 2.7"
+gem "json", "~> 3.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
