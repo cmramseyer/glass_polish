@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.3", ">= 8.1.3.1"
+gem "rails", "~> 8.1.4"
 # Pin json to 2.x: ActiveSupport 8.1.3.1 calls JSON.parse(json, options) positionally,
 # but json 3.x only accepts kwargs -> ArgumentError on any valid session cookie.
 gem "json", "~> 2.7"
